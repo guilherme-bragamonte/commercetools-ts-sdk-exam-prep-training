@@ -1,6 +1,7 @@
 import {
     importProducts, 
-    importPrices
+    importPrices,
+    checkImportSummary
 } from "./lib/importService";
 import { getSourceProduct, getSourceProducts } from "./lib/productService";
 import { log } from "../utils/logger";
@@ -10,6 +11,7 @@ const containerKey = "tt-ImportContainer";
 
 // // TODO Step 2: Get products from the Concept project and import to POC
 // // Use ProductService and ImportService
+getSourceProducts().then(products => importProducts(containerKey, products)).then(log).catch(log);
 
 
 // // TODO Step 3: Check the status of your import operations

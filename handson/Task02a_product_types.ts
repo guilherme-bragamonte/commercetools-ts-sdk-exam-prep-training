@@ -11,7 +11,7 @@ import {log} from "../utils/logger";
 
 
 // Transfer a single product type
-// getSourceProductType("product-key")
-//     .then(productType => transferProductType(productType.body))
-//     .then(log)
-//     .catch(log);
+getSourceProductType("flowers-product-type")
+    .then(productType => transferProductType(productType.body))
+    .then(log)
+    .catch(log);

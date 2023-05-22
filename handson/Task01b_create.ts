@@ -16,26 +16,26 @@ const customerGroupDraft: CustomerGroupDraft = {
     groupName: "loyalbuyers"
 };
 
-createCustomerGroup(customerGroupDraft).then().then(log).catch(log);
+// createCustomerGroup(customerGroupDraft).then().then(log).catch(log);
 
 // // TODO Step 2: Create a customer in handson/CustomerService.ts
 const customerDraft: CustomerDraft = {
-    firstName: "Test",
-    lastName: "Tester",
-    email: "test@test.com",
+    firstName: "Guilherme",
+    lastName: "Bragamonte",
+    email: "guilherme.bragamonte@test.com",
     password: "password",
-    key: "tt-customer",
+    key: "gb-customer",
     addresses: [
         {
-            country: "DE",
-            key: "tt-customer-address"
+            country: "US",
+            key: "gb-customer-address"
         }
     ],
     defaultBillingAddress: 0,
     defaultShippingAddress: 0
 };
 
-createCustomer(customerDraft).then().then(log).catch(log);
+// createCustomer(customerDraft).then().then(log).catch(log);
 
 // getCustomerByKey(customerDraft.key!).then(log).catch(log);
 
@@ -47,6 +47,6 @@ createCustomer(customerDraft).then().then(log).catch(log);
 //     .catch(log);
 
 // // TODO Step 4: Assign customer to a customer group
-// assignCustomerToCustomerGroup(customerDraft.key!, customerGroupDraft.key!)
-//     .then(log)
-//     .catch(log);
+assignCustomerToCustomerGroup(customerDraft.key!, customerGroupDraft.key!)
+    .then(log)
+    .catch(log);
