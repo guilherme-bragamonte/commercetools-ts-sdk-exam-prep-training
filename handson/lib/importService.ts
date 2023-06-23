@@ -8,8 +8,11 @@ import {
   ImportOperationPagedResponse,
   ImportOperation,
   ImportResponse,
+  CategoryImport,
 } from "@commercetools/importapi-sdk";
 import {
+  Category,
+  CategoryPagedQueryResponse,
   Product,
   ProductPagedQueryResponse,
 } from "@commercetools/platform-sdk";
@@ -71,6 +74,36 @@ export const importProducts = async (
     })
     .execute();
 };
+
+export const getCategoryDraftImportArray = (categories: Category[]): Array<CategoryImport> =>
+  categories.map(({
+    key,
+    name,
+    slug,
+    description,
+  }) => ({
+    key: key || '',
+    name,
+    slug,
+    description
+  }));
+
+export const importCategories = async (
+  importContainerKey: string,
+  categories: ClientResponse<CategoryPagedQueryResponse>
+): Promise<ClientResponse<ImportResponse>> => {
+  return importApiRoot
+    .categories()
+    .importContainers()
+    .withImportContainerKeyValue({ importContainerKey })
+    .post({
+      body: {
+        resources: getCategoryDraftImportArray(categories.body.results),
+        type: 'category'
+      }
+    })
+    .execute()
+}
 
 const getProductDraftImportArray = async (
   products: Product[]

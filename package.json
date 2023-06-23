@@ -19,6 +19,7 @@
     "4a": "ts-node handson/Task04a_create_cart.ts",
     "4b": "ts-node handson/Task04b_checkout_graphql.ts",
     "5": "ts-node handson/Task05_subscriptions.ts",
+    "5b": "ts-node handson/Task05b_import_category.ts",
     "6a": "ts-node handson/Task06a_search.ts",
     "6b": "ts-node handson/Task06b_pagination.ts"
   },
