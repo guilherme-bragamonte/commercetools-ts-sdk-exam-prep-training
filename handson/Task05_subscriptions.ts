@@ -14,10 +14,11 @@ const subscriptionDraft: SubscriptionDraft = {
     destination: {
         type: "GoogleCloudPubSub",
         projectId: "ct-support",
-        topic: "training-subscription-sample"
+        topic: "objectedge-topic"
     },
     changes: [{
-        resourceTypeId: "customer"
+        resourceTypeId: "order",
+        
     }]
 };
 
