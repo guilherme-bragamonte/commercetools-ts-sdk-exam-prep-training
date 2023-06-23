@@ -6,8 +6,8 @@ import { createPayment } from "./lib/payment";
 import { log } from "../utils/logger";
 
 // TODO Step 1: Update customer key, cartId and other consts
-const customerKey = "tt-customer";
-const cartId = "2f8397ef-966a-4935-bd97-b2f7ed939333";
+const customerKey = "gb-customer";
+const cartId = "f0a8d336-4cf6-443c-8db1-35dec2dca543";
 const customObjectContainer = "Schemas";
 const customObjectKey = "bonusPointsCalculationSchema";
 const customerBonusFieldName = "bonuspoints-custom-field";
@@ -36,7 +36,7 @@ const taxCategoryKey = "standard-tax-category";
 
 
 const placeOrder = async () => {
-    
+
     // // TODO Step 2: Now use graphql as an improved method to get all the information
     // // Prepare the query
     const query = `
@@ -50,7 +50,7 @@ const placeOrder = async () => {
     var graphQLResponse =  await pocApiRoot.graphql() 
         .post({
             body: {
-            query,
+                query,
             variables: {cartId, customerKey, customObjectContainer}
             }
         })
@@ -59,21 +59,25 @@ const placeOrder = async () => {
     let customObject = graphQLResponse.body.data.customObjects.results[0].value;
     let cartTotal = graphQLResponse.body.data.cart.totalPrice.centAmount;
     let oldPoints = graphQLResponse.body.data.customer.custom.customFieldsRaw[0].value;
-    
+
     let earnedPoints = await calculateBonusPoints(cartTotal, customObject);
-    
+
     // // TODO Step 2:
     // // 1. Add custom line item in the cart for bonus points
     // // 2. Create order
     // // 3. update bonus points on customer
-    
+    var cart = await checkout.addLineItemsToCart(cartId, ["rose-flowers-box", "rose-flowers-box"]);
+    cart = await checkout.addCustomLineItemToCart(cartId, "Bonus points earned", earnedPoints, "bonus-points-earned", taxCategoryKey);
+    var order = await checkout.createOrderFromCart(cart.body);
+    var customer = await getCustomerByKey(customerKey)
+        .then(customer => setCustomFieldValue(customer, customerBonusFieldName, oldPoints + earnedPoints));
 
-
+    return order.body.id;
     // // TODO Step 3
     // // Check the order in the Merchant Center and Impex
 };
 
-// placeOrder().then(log).catch(log);
+placeOrder().then(log).catch(log);
 
 
 const calculateBonusPoints = async ( cartTotal: number, customObject: any ): Promise<number> => {

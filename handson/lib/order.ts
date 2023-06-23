@@ -94,7 +94,7 @@ export const addCustomLineItemToCart = (cartId: string, name: string, centAmount
             })
             .execute()
         );
-        
+
 export const addDiscountCodeToCart = (cartId: string, discountCode: string): Promise<ClientResponse<Cart>> =>
     getCartById(cartId)
         .then(cart => pocApiRoot
@@ -190,9 +190,19 @@ export const setShippingMethod = async (cartId: string): Promise<ClientResponse<
 
 }
 
-export const createOrderFromCart = (cart: Cart): Promise<ClientResponse<Order>> => {
-    throw new Error("Function not implemented")
-}
+export const createOrderFromCart = (cart: Cart): Promise<ClientResponse<Order>> =>
+    pocApiRoot
+        .orders()
+        .post({
+            body: {
+                cart: {
+                    typeId: "cart",
+                    id: cart.id
+                },
+                version: cart.version
+            }
+        })
+        .execute();
 
 export const createOrderFromCartId = (cartId: string): Promise<ClientResponse<Order>> =>
     createOrderFromCartDraft(cartId).then(orderFromCartDraft =>
@@ -208,8 +218,8 @@ const createOrderFromCartDraft = (cartId: string): Promise<OrderFromCartDraft> =
     getCartById(cartId).then(cart => {
         return {
             cart: {
-                  id: cartId,
-                  typeId: "cart"
+                id: cartId,
+                typeId: "cart"
             },
             version: cart.body.version,
         };
