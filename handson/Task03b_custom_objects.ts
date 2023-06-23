@@ -40,10 +40,10 @@ const bonusPointsCalculationSchemaObject: CustomObjectDraft = {
     }
 }
 
-createCustomObject(bonusPointsCalculationSchemaObject)
-    .then(log)
-    .catch(log);
-
-// getCustomObjectByContainerAndKey(bonusPointsCalculationSchemaObject.container,bonusPointsCalculationSchemaObject.key)
+// createCustomObject(bonusPointsCalculationSchemaObject)
 //     .then(log)
 //     .catch(log);
+
+getCustomObjectByContainerAndKey(bonusPointsCalculationSchemaObject.container,bonusPointsCalculationSchemaObject.key)
+    .then(log)
+    .catch(log);
