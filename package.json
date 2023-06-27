@@ -21,7 +21,9 @@
     "5": "ts-node handson/Task05_subscriptions.ts",
     "5b": "ts-node handson/Task05b_import_category.ts",
     "6a": "ts-node handson/Task06a_search.ts",
-    "6b": "ts-node handson/Task06b_pagination.ts"
+    "6b": "ts-node handson/Task06b_pagination.ts",
+
+    "quiz-2.1": "ts-node handson/quiz/2.1.ts"
   },
   "keywords": [
     "commercetools",
